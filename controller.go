@@ -1,4 +1,4 @@
-package main
+package toy_robot
 
 
 import (
@@ -32,7 +32,7 @@ func run(fp *os.File) {
     }
 }
 
-func executeCommad(cmdLine string, r *robot) {
+func executeCommad(cmdLine string, r *Robot) {
 	
 	// tokenize commnad, make all uppercase and put into a vector
 	tokens := strings.Split(cmdLine, " ")
@@ -63,16 +63,16 @@ func executeCommad(cmdLine string, r *robot) {
 				return
 			}
 
-			r.place(x, y, params[2])
+			r.Place(x, y, params[2])
 
 		case "MOVE":
-			r.move()
+			r.Move()
 		case "LEFT":
-			r.left()
+			r.Left()
 		case "RIGHT":
-			r.right()
+			r.Right()
 		case "REPORT":
-			r.report()
+			r.Report()
 		default:
 			fmt.Printf("Invalid command : [%s]\n", cmdLine)
 	}

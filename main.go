@@ -1,4 +1,4 @@
-package main
+package toy_robot
 
 import (
 	"fmt"
@@ -11,12 +11,10 @@ var (
 	readFromConsole bool
 )
 
-func init() {
-	flag.StringVar(&fileName, "command-file", "commands.txt", "Files to get commands")
-	flag.BoolVar(&readFromConsole, "console", false, "Read commands from console")
-}
-
 func main() {
+	flag.StringVar(&fileName, "cmdfile", "commands.txt", "Files to get commands")
+	flag.BoolVar(&readFromConsole, "console", false, "Read commands from console")
+    
     flag.Parse()
 
     var inputFile *os.File

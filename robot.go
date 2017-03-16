@@ -1,4 +1,4 @@
-package main
+package toy_robot
 
 import (
 	"fmt"
@@ -57,72 +57,73 @@ type MovePair struct {
 var movePairArray [4]MovePair
 
 
-type robot struct {
-	x			int
-	y			int
-	direction 	DirectionType
+type Robot struct {
+	X			int
+	Y			int
+	Direction 	DirectionType
 }
 
-// Craete and initialize robot 
-func newRobot() robot {
-	// TODO: this should be better done in init, once per app
+func init() {
 	movePairArray[NORTH] = MovePair{0, +1}
 	movePairArray[EAST] = MovePair{+1, 0}
 	movePairArray[SOUTH] = MovePair{0, -1}
 	movePairArray[WEST] = MovePair{-1, 0}
+}
 
-	r := robot{-1, -1, NODIR}
+// Craete and initialize Robot 
+func newRobot() Robot {
+	r := Robot{-1, -1, NODIR}
 	return r
 }
 
 // Validate given x,y to be on the table
-func (r *robot) validateXY(x int, y int) bool {
+func (r *Robot) validateXY(x int, y int) bool {
 	return x > -1 && x < TABLE_DIM_X && y > -1 && y < TABLE_DIM_Y;
 }
 
-// PLACE will put the toy robot on the table in position X,Y 
+// PLACE will put the toy Robot on the table in position X,Y 
 // and facing NORTH, SOUTH, EAST or WEST. 
-func (r *robot) place(x int, y int, dir string) {
+func (r *Robot) Place(x int, y int, dir string) {
 	if direction := stringToDirectionType(dir); r.validateXY(x, y) && direction != NODIR {
-		r.x = x
-		r.y = y
-		r.direction = direction
+		r.X = x
+		r.Y = y
+		r.Direction = direction
 	}
 }
 
-// MOVE will move the toy robot one unit forward in the 
+// MOVE will move the toy Robot one unit forward in the 
 // direction it is currently facing.
-func (r *robot) move() {
-	if r.direction == NODIR {
+func (r *Robot) Move() {
+	if r.Direction == NODIR {
 		return
 	}
 
-	nextX := r.x + movePairArray[r.direction].x.(int)
-	nextY := r.y + movePairArray[r.direction].y.(int)
+	nextX := r.X + movePairArray[r.Direction].x.(int)
+	nextY := r.Y + movePairArray[r.Direction].y.(int)
 
 	if r.validateXY(nextX, nextY) {
-		r.x = nextX;
-		r.y = nextY;
+		r.X = nextX;
+		r.Y = nextY;
 	}
 }
 
-// LEFT will rotate the robot 90 degrees in the specified 
-// direction without changing the position of the robot.
-func (r *robot) left() {
-	r.direction--
-	r.direction %= 4;
+// LEFT will rotate the Robot 90 degrees in the specified 
+// direction without changing the position of the Robot.
+func (r *Robot) Left() {
+	r.Direction--
+	r.Direction %= 4;
 }
 
-// RIGHT will rotate the robot 90 degrees in the specified 
-// direction without changing the position of the robot.
-func (r *robot) right() {
-	r.direction++
-	r.direction %= 4;
+// RIGHT will rotate the Robot 90 degrees in the specified 
+// direction without changing the position of the Robot.
+func (r *Robot) Right() {
+	r.Direction++
+	r.Direction %= 4;
 }
 
-// REPORT will announce the X,Y and orientation of the robot.
-func (r *robot) report() {
-	if r.validateXY(r.x, r.y) {
-		fmt.Printf("%d,%d,%s\n", r.x, r.y, r.direction.String())
+// REPORT will announce the X,Y and orientation of the Robot.
+func (r *Robot) Report() {
+	if r.validateXY(r.X, r.Y) {
+		fmt.Printf("%d,%d,%s\n", r.X, r.Y, r.Direction.String())
 	}
 }
